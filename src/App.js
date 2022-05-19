@@ -19,7 +19,7 @@ export default function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Link to="/create" className="nav-link">
+              <Link to="/tasks/create" className="nav-link">
                 Create
               </Link>
             </Nav>
