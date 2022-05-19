@@ -17,5 +17,9 @@ export async function signIn({ email, password }) {
     }
   );
   const json = await response.json();
-  return json;
+  if (response.ok) {
+    return json;
+  } else {
+    return Promise.reject(json.message);
+  }
 }

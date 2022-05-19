@@ -17,6 +17,8 @@ import UserContext from '../containers/UserContext';
   async function onSubmit(event) {
     event.preventDefault();
     const { email, password } = event.target.elements;
+    try{  
+      setError('')
       const response = await signIn({
         email: email.value,
         password: password.value,
@@ -26,10 +28,15 @@ import UserContext from '../containers/UserContext';
        localStorage.setItem('user', JSON.stringify(response.data))
        
        navigate('/');
-      }
+    }catch(err){
+      setError(err);
+    }
+
+  }
 
   return (
     <>
+     {error && <Alert variant="Warning">{error}</Alert>}
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
