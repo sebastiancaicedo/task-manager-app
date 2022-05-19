@@ -36,6 +36,7 @@ export default function EditTask() {
       setDescription(response.description);
       setCreatedAt(response.createdAt);
       setUpdatedAt(response.updatedAt);
+      setCompleted(response.completed);
       setLoading(false);
     } catch (error) {
       setError(error);
@@ -50,8 +51,7 @@ export default function EditTask() {
   async function _updateTask(event) {
     try {
       setError('');
-      await updateTask({
-        id,
+      await updateTask(id, {
         description,
         completed,
       });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Button,
   FormControl,
@@ -9,6 +9,8 @@ import {
   Container,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { updateTask } from '../api/tasks';
+import UserContext from '../containers/UserContext';
 
 function TaskFull({
   id = '',
@@ -16,21 +18,46 @@ function TaskFull({
   createdAt = '',
   updatedAt = '',
   completed = false,
+  onError = (err) => {},
 }) {
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const [_completed, setCompleted] = useState(completed);
+
+  async function handleCompleteChecbox(event) {
+    setCompleted(event.target.checked);
+    try {
+      await updateTask(id, {
+        completed: event.target.checked,
+      });
+      navigate('/');
+    } catch (err) {
+      onError(err.message);
+    }
+  }
 
   return (
     <Container>
       <Card border="primary" style={{ padding: '20px' }}>
         <InputGroup>
-          <InputGroup.Checkbox aria-label="Is Completed" />
+          <InputGroup.Checkbox
+            aria-label="Is Completed"
+            checked={_completed}
+            onChange={handleCompleteChecbox}
+            disabled={!user}
+          />
           <FormControl
             placeholder="Task's description"
             aria-label="Task's description"
             value={description}
-            readOnly={true}
+            readOnly={!user}
           />
-          <Button variant="info" onClick={(e) => navigate(`/tasks/${id}`)}>
+          <Button
+            variant="info"
+            onClick={(e) => navigate(`/tasks/${id}`)}
+            hidden={user === null}
+          >
             Edit
           </Button>
         </InputGroup>

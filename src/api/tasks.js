@@ -8,6 +8,7 @@ function transformTask(item) {
     description: item.description,
     createdAt: format(new Date(item.createdAt), 'dd/MM/yyyy HH:mm:s'),
     updatedAt: format(new Date(item.updatedAt), 'dd/MM/yyyy HH:mm:s'),
+    completed: item.completed || false,
   };
 }
 
@@ -44,13 +45,9 @@ export function createTask({ description, userId }) {
     });
 }
 
-export function updateTask({ id, description, completed }) {
-  console.log(id);
+export function updateTask(id, payload) {
   return http
-    .put(`/tasks/${id}`, {
-      description,
-      completed,
-    })
+    .put(`/tasks/${id}`, payload)
     .then(({ data: json }) => transformTask(json.data))
     .catch((error) => {
       throw new Error(error.response.data.message);
