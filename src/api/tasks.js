@@ -22,3 +22,9 @@ export function getTasks() {
     };
   });
 }
+
+export function getTask({ id }) {
+  return http
+    .get(`/tasks/${id}`)
+    .then(({ data: json }) => transformTask(json.data));
+}

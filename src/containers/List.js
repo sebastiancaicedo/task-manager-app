@@ -39,18 +39,14 @@ export default function List() {
       {error && <Alert variant="danger">{error.message}</Alert>}
       {data.map(function (item) {
         return (
-          <>
-            <div>
-              <Accordion>
-                <Tasks
-                  key={item.id}
-                  id={item.id}
-                  createdAt={item.createdAt}
-                  description={item.description}
-                />
-              </Accordion>
-            </div>
-          </>
+          <Accordion>
+            <Tasks
+              key={item.id}
+              id={item.id}
+              createdAt={item.createdAt}
+              description={item.description}
+            />
+          </Accordion>
         );
       })}
     </>
