@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Accordion,
@@ -12,10 +12,12 @@ import {
 } from 'react-bootstrap';
 
 import { updateTask, deleteTask, getTask } from './../api/tasks';
+import UserContext from '../containers/UserContext';
 
 export default function EditTask() {
   const params = useParams();
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   const [id, setId] = useState('');
   const [description, setDescription] = useState('');
@@ -82,6 +84,7 @@ export default function EditTask() {
         <Card border="primary" style={{ padding: '20px' }}>
           <InputGroup>
             <InputGroup.Checkbox
+              disabled={!user}
               checked={completed}
               aria-label="Is Completed"
               onChange={(e) => setCompleted(e.target.checked)}
@@ -89,13 +92,24 @@ export default function EditTask() {
             <FormControl
               placeholder="Task's description"
               aria-label="Task's description"
+              readOnly={!user}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <Button variant="primary" onClick={_updateTask}>
+            <Button
+              variant="primary"
+              onClick={_updateTask}
+              disabled={!user}
+              hidden={!user}
+            >
               Update
             </Button>
-            <Button variant="danger" onClick={_deleteTask}>
+            <Button
+              variant="danger"
+              onClick={_deleteTask}
+              disabled={!user}
+              hidden={!user}
+            >
               Delete
             </Button>
           </InputGroup>
