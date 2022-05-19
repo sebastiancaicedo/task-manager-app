@@ -13,7 +13,7 @@ export default function Task({ id = "", description = "", createdAt = "" }) {
         }}
       >
         <p className="mb-2 text-muted">Creation date: {createdAt}</p>
-        <p class="font-weight-normal text-justify">{description}</p>
+        <p className="font-weight-normal text-justify">{description}</p>
       </Accordion.Body>
     </Accordion.Item>
   );
