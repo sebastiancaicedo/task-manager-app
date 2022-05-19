@@ -1,49 +1,45 @@
-//import React from "react";
-//import { Button, Form } from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Alert, Button, Form } from "react-bootstrap";
 
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Alert, Button, Form } from 'react-bootstrap';
+import { signIn } from "../api/users";
+import UserContext from "../containers/UserContext";
 
-import { signIn } from '../api/users';
-import UserContext from '../containers/UserContext';
-
- export default function SignIn() {
+export default function SignIn() {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
-  const [error, setError] = useState('');
-
+  const [error, setError] = useState("");
 
   async function onSubmit(event) {
     event.preventDefault();
     const { email, password } = event.target.elements;
-    try{  
-      setError('')
-      const response = await signIn({
+    try {
+      setError("");
+      const { data: user } = await signIn({
         email: email.value,
         password: password.value,
       });
-       
-       localStorage.setItem('token', response.meta.token)
-       localStorage.setItem('user', JSON.stringify(response.data))
-       
-       navigate('/');
-    }catch(err){
+
+      setUser(user);
+
+      navigate(`/tasks`);
+    } catch (err) {
       setError(err);
     }
-
   }
 
   return (
     <>
-     {error && <Alert variant="Warning">{error}</Alert>}
+      <h2 className="mt-2">Sign In</h2>
+      {error && <Alert variant="Warning">{error}</Alert>}
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="text"
             name="email"
-            placeholder="Enter your username"
+            placeholder="Enter your email"
+            required={true}
           />
         </Form.Group>
 
@@ -53,6 +49,7 @@ import UserContext from '../containers/UserContext';
             type="password"
             name="password"
             placeholder="Password"
+            required={true}
           />
         </Form.Group>
 
