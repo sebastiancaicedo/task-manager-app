@@ -5,6 +5,7 @@ import { clearSession } from './auth';
 import PrivateRoute from './containers/PrivateRoute';
 import UserContext, { UserProvider } from './containers/UserContext';
 
+import Header from './containers/Header';
 const Home = React.lazy(() => import('./pages/Home'));
 const CreateTask = React.lazy(() => import('./pages/CreateTask'));
 const Signin = React.lazy(() => import('./pages/Signin'));
