@@ -3,10 +3,19 @@ export function setSession(token = '') {
   }
   
   export function getSession() {
-    return localStorage.getItem('token');
+    return {
+        token: localStorage.getItem('token'),
+        user: JSON.parse(localStorage.getItem('user')),
+    };
   }
   
   export function clearSession() {
     localStorage.removeItem('token');
+    
+  }
+
+  export function isAuthenticated(){
+      const user=JSON.parse(localStorage.getItem('user'));
+      return Boolean (user?.email);
   }
   
