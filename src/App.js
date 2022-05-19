@@ -1,10 +1,12 @@
 import React from "react";
 import { Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import { Routes, Route, Link } from "react-router-dom";
-import Create from "./pages/Create";
-import Home from "./pages/Home";
-import Signin from "./pages/Signin";
-import Signup from "./pages/Signup";
+
+const Home = React.lazy(() => import("./pages/Home"));
+const Create = React.lazy(() => import("./pages/Create"));
+const Signin = React.lazy(() => import("./pages/Signin"));
+const Signup = React.lazy(() => import("./pages/Signup"));
+const SingleTask = React.lazy(() => import("./pages/SingleTask"));
 
 export default function App() {
   return (
@@ -35,12 +37,16 @@ export default function App() {
       <Container>
         <Row>
           <Col>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/create" element={<Create />} />
-              <Route path="/signin" element={<Signin />} />
-              <Route path="/signup" element={<Signup />} />
-            </Routes>
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/tasks/:id" element={<SingleTask />} />
+                <Route path="/create" element={<Create />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="*" element={<Home />} />
+              </Routes>
+            </React.Suspense>
           </Col>
         </Row>
       </Container>
