@@ -1,12 +1,12 @@
-import React from "react";
-import { Col, Container, Nav, Navbar, Row } from "react-bootstrap";
-import { Routes, Route, Link } from "react-router-dom";
+import React from 'react';
+import { Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
+import { Routes, Route, Link } from 'react-router-dom';
 
-const Home = React.lazy(() => import("./pages/Home"));
-const Create = React.lazy(() => import("./pages/Create"));
-const Signin = React.lazy(() => import("./pages/Signin"));
-const Signup = React.lazy(() => import("./pages/Signup"));
-const SingleTask = React.lazy(() => import("./pages/SingleTask"));
+const Home = React.lazy(() => import('./pages/Home'));
+const CreateTask = React.lazy(() => import('./pages/CreateTask'));
+const Signin = React.lazy(() => import('./pages/Signin'));
+const Signup = React.lazy(() => import('./pages/Signup'));
+const EditTask = React.lazy(() => import('./pages/EditTask'));
 
 export default function App() {
   return (
@@ -40,8 +40,8 @@ export default function App() {
             <React.Suspense fallback={<div>Loading...</div>}>
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/tasks/:id" element={<SingleTask />} />
-                <Route path="/create" element={<Create />} />
+                <Route path="/tasks/:id" element={<EditTask />} />
+                <Route path="/tasks/create" element={<CreateTask />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="*" element={<Home />} />
