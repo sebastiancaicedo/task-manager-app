@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { clearSession } from './auth';
+import { getSession,clearSession, isAuthenticated } from './auth';
 import PrivateRoute from './containers/PrivateRoute';
 import UserContext, { UserProvider } from './containers/UserContext';
 
@@ -13,7 +13,7 @@ const Signup = React.lazy(() => import('./pages/Signup'));
 const EditTask = React.lazy(() => import('./pages/EditTask'));
 
 export default function App() {
-  const { user, setUser = null } = useContext(UserContext);
+  const {  setUser = null } = useContext(UserContext);
   const navigate = useNavigate();
 
   function onSignOut(event) {
@@ -23,7 +23,7 @@ export default function App() {
     clearSession();
     navigate('/');
   }
-
+  const { user= {} } = getSession();
   return (
     <UserProvider>
       <Navbar bg="light" expand="lg">
@@ -38,7 +38,7 @@ export default function App() {
                 Create
               </Link>
             </Nav>
-            {user ? (
+            {isAuthenticated() ? (
               <>
                 <Link to="/profile" className="nav-link">
                   @{user.email}
@@ -49,14 +49,14 @@ export default function App() {
               </>
             ) : (
               <>
-                <Nav>
+                
                   <Link to="/signup" className="nav-link">
                     Sign Up
                   </Link>
                   <Link to="/signin" className="nav-link">
                     Sign In
                   </Link>
-                </Nav>
+                
               </>
             )}
           </Navbar.Collapse>
