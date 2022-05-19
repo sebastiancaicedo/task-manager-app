@@ -44,6 +44,7 @@ export default function List() {
             createdAt={item.createdAt}
             updatedAt={item.updatedAt}
             completed={item.completed}
+            onError={(err) => setError(err)}
           />
         );
       })}
