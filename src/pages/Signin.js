@@ -1,20 +1,21 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Alert, Button, Form } from "react-bootstrap";
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Alert, Button, Form } from 'react-bootstrap';
 
-import { signIn } from "../api/users";
-import UserContext from "../containers/UserContext";
+import { signIn } from '../api/users';
+import UserContext from '../containers/UserContext';
 
 export default function SignIn() {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   async function onSubmit(event) {
     event.preventDefault();
     const { email, password } = event.target.elements;
+
     try {
-      setError("");
+      setError('');
       const { data: user } = await signIn({
         email: email.value,
         password: password.value,

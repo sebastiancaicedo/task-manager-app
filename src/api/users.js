@@ -1,6 +1,6 @@
-import http from "./http";
+import http from './http';
 
-import { setSession } from "../auth";
+import { setSession } from '../auth';
 
 export async function signUp({ firstName, lastName, email, password }) {
   return http
