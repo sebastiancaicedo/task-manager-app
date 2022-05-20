@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Alert,
@@ -10,9 +10,11 @@ import {
 } from 'react-bootstrap';
 
 import { createTask } from './../api/tasks';
+import UserContext from '../containers/UserContext';
 
 export default function CreateTask() {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   const [error, setError] = useState('');
   const [description, setDescription] = useState('');
@@ -22,6 +24,7 @@ export default function CreateTask() {
       setError('');
       await createTask({
         description,
+        userId: user.id,
       });
       navigate('/');
     } catch (err) {

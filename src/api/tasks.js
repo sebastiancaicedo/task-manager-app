@@ -12,17 +12,19 @@ function transformTask(item) {
   };
 }
 
-export function getTasks() {
-  return http.get('/tasks?direction=desc').then(({ data: json }) => {
-    const transformData = json.data.map(function (item) {
-      return transformTask(item);
-    });
+export function getTasks(userId = '') {
+  return http
+    .get(`/tasks/user/${userId}?direction=desc`)
+    .then(({ data: json }) => {
+      const transformData = json.data.map(function (item) {
+        return transformTask(item);
+      });
 
-    return {
-      data: transformData,
-      meta: json.meta,
-    };
-  });
+      return {
+        data: transformData,
+        meta: json.meta,
+      };
+    });
 }
 
 export function getTask(taskId = '') {
@@ -37,7 +39,7 @@ export function getTask(taskId = '') {
 
 export function createTask({ description, userId }) {
   return http
-    .post('/tasks', { description, author: '6282c4bdfe08489c22960a9a' })
+    .post('/tasks', { description, author: userId })
     .then(({ data: json }) => transformTask(json.data))
     .catch((error) => {
       throw new Error(error.response.data.message);

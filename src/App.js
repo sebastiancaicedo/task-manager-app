@@ -20,7 +20,14 @@ export default function App() {
           <Col>
             <React.Suspense fallback={<div>Loading...</div>}>
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route
+                  path="/"
+                  element={
+                    <PrivateRoute>
+                      <Home />
+                    </PrivateRoute>
+                  }
+                />
                 <Route path="/tasks/:id" element={<EditTask />} />
                 <Route
                   path="/tasks/create"

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
 import { getTasks } from '../api/tasks';
 import TaskFull from '../components/TaskFull';
+import UserContext from './UserContext';
 
 export default function List() {
+  const { user } = useContext(UserContext);
+
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -11,7 +14,7 @@ export default function List() {
   async function loadList() {
     setLoading(true);
     try {
-      const response = await getTasks();
+      const response = await getTasks(user.id);
       setData(response.data);
       setLoading(false);
     } catch (error) {
