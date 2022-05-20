@@ -19,7 +19,7 @@ export default function Signup() {
     try {
       setError("");
       await signUp(userData);
-      navigate(`/tasks`);
+      navigate(`/signin`);
     } catch (err) {
       setError(err);
     }
@@ -34,7 +34,7 @@ export default function Signup() {
             type="text"
             placeholder="Enter name"
             name="name"
-            required="true"
+            required={true}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -43,7 +43,7 @@ export default function Signup() {
             type="text"
             placeholder="Enter last name"
             name="lastname"
-            required="true"
+            required={true}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -56,7 +56,7 @@ export default function Signup() {
             type="password"
             placeholder="Password"
             name="password"
-            required="true"
+            required={true}
           />
         </Form.Group>
         <Button variant="primary" type="submit">

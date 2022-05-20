@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, Spinner } from 'react-bootstrap';
-import { getTasks } from '../api/tasks';
-import TaskFull from '../components/TaskFull';
+import React, { useEffect, useState, useContext } from "react";
+import { Alert, Spinner } from "react-bootstrap";
+import { getTasks } from "../api/tasks";
+import TaskFull from "../components/TaskFull";
+import UserContext from "./UserContext";
 
 export default function List() {
+  const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
   async function loadList() {
     setLoading(true);
     try {
-      const response = await getTasks();
+      const response = await getTasks(user.id);
       setData(response.data);
       setLoading(false);
     } catch (error) {
@@ -26,7 +28,7 @@ export default function List() {
 
   if (loading) {
     return (
-      <Spinner animation="border" role="status" style={{ margin: '16px auto' }}>
+      <Spinner animation="border" role="status" style={{ margin: "16px auto" }}>
         <span className="visually-hidden">Loading...</span>
       </Spinner>
     );
