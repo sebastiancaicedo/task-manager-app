@@ -26,7 +26,6 @@ export function getTasks() {
 }
 
 export function getTask(taskId = '') {
-  console.log(taskId);
   return http
     .get(`/tasks/${taskId}`)
     .then(({ data: json }) => transformTask(json.data))

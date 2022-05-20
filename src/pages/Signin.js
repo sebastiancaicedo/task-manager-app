@@ -4,8 +4,9 @@ import { Alert, Button, Form } from 'react-bootstrap';
 
 import { signIn } from '../api/users';
 import UserContext from '../containers/UserContext';
+import { setSession } from '../auth';
 
-export default function SignIn() {
+export default function SignIn({ onSignIn = (u) => {} }) {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   const [error, setError] = useState('');
@@ -16,11 +17,13 @@ export default function SignIn() {
 
     try {
       setError('');
-      const { data: user } = await signIn({
+      const { data: user, meta } = await signIn({
         email: email.value,
         password: password.value,
       });
-
+      console.log(user);
+      setSession(meta.token);
+      onSignIn(user);
       setUser(user);
 
       navigate(`/tasks`);

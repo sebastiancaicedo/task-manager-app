@@ -28,6 +28,7 @@ function TaskFull({
   async function handleCompleteChecbox(event) {
     setCompleted(event.target.checked);
     try {
+      onError('');
       await updateTask(id, {
         completed: event.target.checked,
       });
@@ -52,6 +53,7 @@ function TaskFull({
             aria-label="Task's description"
             value={description}
             readOnly={!user}
+            onChange={(e) => {}}
           />
           <Button
             variant="info"

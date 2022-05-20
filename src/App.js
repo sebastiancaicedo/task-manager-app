@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
-import { Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { clearSession } from './auth';
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './containers/PrivateRoute';
-import UserContext, { UserProvider } from './containers/UserContext';
+import { UserProvider } from './containers/UserContext';
 
 import Header from './containers/Header';
 const Home = React.lazy(() => import('./pages/Home'));
@@ -13,55 +12,9 @@ const Signup = React.lazy(() => import('./pages/Signup'));
 const EditTask = React.lazy(() => import('./pages/EditTask'));
 
 export default function App() {
-  const { user, setUser = null } = useContext(UserContext);
-  const navigate = useNavigate();
-
-  function onSignOut(event) {
-    event.preventDefault();
-
-    setUser(null);
-    clearSession();
-    navigate('/');
-  }
-
   return (
     <UserProvider>
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Link to="/" className="navbar-brand">
-            Task List
-          </Link>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Link to="/tasks/create" className="nav-link">
-                Create
-              </Link>
-            </Nav>
-            {user ? (
-              <>
-                <Link to="/profile" className="nav-link">
-                  @{user.email}
-                </Link>
-                <Nav.Link className="nav-link" onClick={onSignOut}>
-                  Sign Out
-                </Nav.Link>
-              </>
-            ) : (
-              <>
-                <Nav>
-                  <Link to="/signup" className="nav-link">
-                    Sign Up
-                  </Link>
-                  <Link to="/signin" className="nav-link">
-                    Sign In
-                  </Link>
-                </Nav>
-              </>
-            )}
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <Header />
       <Container>
         <Row>
           <Col>

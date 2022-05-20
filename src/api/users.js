@@ -1,18 +1,18 @@
 import http from './http';
 
-import { setSession } from '../auth';
-
 export async function signUp({ firstName, lastName, email, password }) {
   return http
     .post(`/users`, { firstName, lastName, email, password })
-    .then(({ data: json }) => console.log(json.data));
+    .catch((err) => {
+      throw new Error(JSON.stringify(err));
+    });
 }
+
 export async function signIn({ email, password }) {
   return http
     .post(`/users/signin`, { email, password })
-    .then(({ data: json }) => {
-      setSession(json.meta.token);
-
-      return json;
+    .then(({ data: json }) => json)
+    .catch((err) => {
+      throw new Error(JSON.stringify(err));
     });
 }

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { signUp } from "../api/users";
+import React, { useState } from 'react';
+import { Alert, Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { signUp } from '../api/users';
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -17,9 +17,9 @@ export default function Signup() {
       password: password.value,
     };
     try {
-      setError("");
+      setError('');
       await signUp(userData);
-      navigate(`/tasks`);
+      navigate(`/signIn`);
     } catch (err) {
       setError(err);
     }
@@ -34,7 +34,7 @@ export default function Signup() {
             type="text"
             placeholder="Enter name"
             name="name"
-            required="true"
+            required={true}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -43,7 +43,7 @@ export default function Signup() {
             type="text"
             placeholder="Enter last name"
             name="lastname"
-            required="true"
+            required={true}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -56,7 +56,7 @@ export default function Signup() {
             type="password"
             placeholder="Password"
             name="password"
-            required="true"
+            required={true}
           />
         </Form.Group>
         <Button variant="primary" type="submit">

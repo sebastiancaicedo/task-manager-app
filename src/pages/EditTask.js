@@ -30,11 +30,10 @@ export default function EditTask() {
 
   async function loadTask() {
     setLoading(true);
-    console.log(params.id);
     try {
       setId(params.id);
       const response = await getTask(params.id);
-      console.log(response);
+
       setDescription(response.description);
       setCreatedAt(response.createdAt);
       setUpdatedAt(response.updatedAt);
